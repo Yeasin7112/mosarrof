@@ -1,14 +1,16 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PenLine, UserCircle } from "lucide-react";
-import heroBanner from "@/assets/hero-banner.jpg";
+import { useSiteContent } from "@/hooks/useSiteContent";
+import parliamentBuilding from "@/assets/parliament-building.jpg";
 
 const HeroSection = () => {
+  const { data: hero } = useSiteContent("hero");
+
   return (
     <section className="relative overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0">
-        <img src={heroBanner} alt="জাতীয় সংসদ ভবন" className="h-full w-full object-cover" />
+        <img src={parliamentBuilding} alt="জাতীয় সংসদ ভবন" className="h-full w-full object-cover" />
         <div className="absolute inset-0 hero-gradient opacity-85" />
       </div>
 
@@ -21,12 +23,11 @@ const HeroSection = () => {
           </div>
 
           <h1 className="mt-6 text-4xl font-extrabold leading-tight text-primary-foreground md:text-5xl lg:text-6xl animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            আপনার এমপি'কে লিখুন
+            {hero?.title || "আপনার এমপি'কে লিখুন"}
           </h1>
 
           <p className="mt-4 text-lg text-primary-foreground/80 md:text-xl animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            আপনার এলাকার যেকোনো সমস্যা, অভিযোগ, প্রস্তাব বা পরামর্শ সরাসরি
-            <strong className="text-primary-foreground"> এবিএম মোশাররফ হোসেন</strong> ও তাঁর টিমকে জানাতে এই ফর্মটি ব্যবহার করুন।
+            {hero?.content || "আপনার এলাকার যেকোনো সমস্যা, অভিযোগ, প্রস্তাব বা পরামর্শ সরাসরি এবিএম মোশাররফ হোসেন ও তাঁর টিমকে জানাতে এই ফর্মটি ব্যবহার করুন।"}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4 animate-fade-up" style={{ animationDelay: "0.3s" }}>

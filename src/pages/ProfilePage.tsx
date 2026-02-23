@@ -1,8 +1,13 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Award, MapPin, Building2, GraduationCap } from "lucide-react";
+import { useSiteContent } from "@/hooks/useSiteContent";
+import mpPhoto from "@/assets/mp-photo.jpeg";
 
 const ProfilePage = () => {
+  const { data: profile } = useSiteContent("mp_profile");
+  const meta = (profile?.metadata || {}) as Record<string, string>;
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -20,25 +25,24 @@ const ProfilePage = () => {
 
         <section className="container py-12 md:py-16">
           <div className="mx-auto max-w-3xl">
-            {/* MP Info Card */}
             <div className="rounded-2xl border bg-card p-8 shadow-sm">
               <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
-                <div className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-primary text-4xl font-bold text-primary-foreground">
-                  এম
-                </div>
+                <img
+                  src={mpPhoto}
+                  alt={profile?.title || "এবিএম মোশাররফ হোসেন"}
+                  className="h-32 w-32 shrink-0 rounded-full object-cover border-4 border-primary/20"
+                />
                 <div>
-                  <h2 className="text-2xl font-bold text-foreground">এবিএম মোশাররফ হোসেন</h2>
+                  <h2 className="text-2xl font-bold text-foreground">
+                    {profile?.title || "এবিএম মোশাররফ হোসেন"}
+                  </h2>
                   <p className="mt-1 text-muted-foreground">
-                    সংসদ সদস্য, ১১৪ পটুয়াখালী-৪ আসন
-                  </p>
-                  <p className="text-muted-foreground">
-                    ত্রয়োদশ জাতীয় সংসদ
+                    {profile?.content || "সংসদ সদস্য, ১১৪ পটুয়াখালী-৪ আসন"}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Details */}
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
               <div className="rounded-xl border bg-card p-6">
                 <div className="mb-3 flex items-center gap-3">
@@ -46,7 +50,7 @@ const ProfilePage = () => {
                   <h3 className="font-semibold text-foreground">নির্বাচনী এলাকা</h3>
                 </div>
                 <p className="text-muted-foreground">
-                  ১১৪ পটুয়াখালী-৪ আসন — গলাচিপা, রাঙ্গাবালী উপজেলা
+                  {meta.constituency || "১১৪ পটুয়াখালী-৪"} — {meta.area || "গলাচিপা, রাঙ্গাবালী উপজেলা"}
                 </p>
               </div>
 
@@ -55,9 +59,7 @@ const ProfilePage = () => {
                   <Building2 className="h-6 w-6 text-primary" />
                   <h3 className="font-semibold text-foreground">দল</h3>
                 </div>
-                <p className="text-muted-foreground">
-                  জনগণের প্রতিনিধি হিসেবে নির্বাচিত
-                </p>
+                <p className="text-muted-foreground">{meta.party || "জনগণের প্রতিনিধি"}</p>
               </div>
 
               <div className="rounded-xl border bg-card p-6">
@@ -65,9 +67,7 @@ const ProfilePage = () => {
                   <GraduationCap className="h-6 w-6 text-primary" />
                   <h3 className="font-semibold text-foreground">শিক্ষাগত যোগ্যতা</h3>
                 </div>
-                <p className="text-muted-foreground">
-                  বিস্তারিত তথ্য শীঘ্রই যোগ করা হবে
-                </p>
+                <p className="text-muted-foreground">{meta.education || "—"}</p>
               </div>
 
               <div className="rounded-xl border bg-card p-6">
@@ -75,9 +75,7 @@ const ProfilePage = () => {
                   <Award className="h-6 w-6 text-primary" />
                   <h3 className="font-semibold text-foreground">অভিজ্ঞতা</h3>
                 </div>
-                <p className="text-muted-foreground">
-                  বিস্তারিত তথ্য শীঘ্রই যোগ করা হবে
-                </p>
+                <p className="text-muted-foreground">{meta.experience || "—"}</p>
               </div>
             </div>
           </div>
