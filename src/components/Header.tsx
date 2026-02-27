@@ -7,6 +7,9 @@ const navItems = [
   { label: "হোম", path: "/" },
   { label: "প্রার্থী পরিচিতি", path: "/profile" },
   { label: "অঙ্গীকারসমূহ", path: "/promises" },
+  { label: "স্বচ্ছতা বোর্ড", path: "/transparency" },
+  { label: "সাফল্যের গল্প", path: "/success-stories" },
+  { label: "সাক্ষাৎ বুকিং", path: "/appointment" },
   { label: "যোগাযোগ", path: "/contact" },
 ];
 
@@ -27,12 +30,12 @@ const Header = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${
+              className={`rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${
                 location.pathname === item.path
                   ? "bg-accent text-accent-foreground"
                   : "text-muted-foreground"
@@ -42,12 +45,12 @@ const Header = () => {
             </Link>
           ))}
           <Link to="/write">
-            <Button className="ml-2">এমপি'কে লিখুন</Button>
+            <Button className="ml-2" size="sm">এমপি'কে লিখুন</Button>
           </Link>
         </nav>
 
         {/* Mobile toggle */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <Link to="/write">
             <Button size="sm">এমপি'কে লিখুন</Button>
           </Link>
@@ -62,7 +65,7 @@ const Header = () => {
 
       {/* Mobile Nav */}
       {isOpen && (
-        <div className="animate-fade-in border-t bg-card md:hidden">
+        <div className="animate-fade-in border-t bg-card lg:hidden">
           <nav className="container flex flex-col py-3">
             {navItems.map((item) => (
               <Link
@@ -78,6 +81,13 @@ const Header = () => {
                 {item.label}
               </Link>
             ))}
+            <Link
+              to="/tracking"
+              onClick={() => setIsOpen(false)}
+              className="rounded-md px-4 py-3 text-sm font-medium text-primary hover:bg-accent"
+            >
+              🔍 অভিযোগ ট্র্যাকিং
+            </Link>
           </nav>
         </div>
       )}

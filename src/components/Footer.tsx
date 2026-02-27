@@ -28,6 +28,10 @@ const Footer = () => {
               <Link to="/" className="hover:text-primary-foreground transition-colors">হোম</Link>
               <Link to="/profile" className="hover:text-primary-foreground transition-colors">প্রার্থী পরিচিতি</Link>
               <Link to="/write" className="hover:text-primary-foreground transition-colors">এমপি'কে লিখুন</Link>
+              <Link to="/tracking" className="hover:text-primary-foreground transition-colors">অভিযোগ ট্র্যাকিং</Link>
+              <Link to="/transparency" className="hover:text-primary-foreground transition-colors">স্বচ্ছতা বোর্ড</Link>
+              <Link to="/appointment" className="hover:text-primary-foreground transition-colors">সাক্ষাৎ বুকিং</Link>
+              <Link to="/success-stories" className="hover:text-primary-foreground transition-colors">সাফল্যের গল্প</Link>
               <Link to="/contact" className="hover:text-primary-foreground transition-colors">যোগাযোগ</Link>
             </div>
           </div>

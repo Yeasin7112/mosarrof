@@ -14,42 +14,105 @@ export type Database = {
   }
   public: {
     Tables: {
+      appointments: {
+        Row: {
+          admin_notes: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          mobile: string
+          name: string
+          preferred_date: string
+          preferred_time: string | null
+          purpose: string
+          status: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          mobile: string
+          name: string
+          preferred_date: string
+          preferred_time?: string | null
+          purpose: string
+          status?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          mobile?: string
+          name?: string
+          preferred_date?: string
+          preferred_time?: string | null
+          purpose?: string
+          status?: string | null
+        }
+        Relationships: []
+      }
       complaints: {
         Row: {
           address: string
+          admin_notes: string | null
+          attachment_url: string | null
+          category: string | null
           created_at: string
           details: string
           email: string | null
           id: string
+          is_emergency: boolean | null
           is_private: boolean | null
           mobile: string
           name: string | null
           status: string | null
           subject: string | null
+          tracking_id: string | null
+          union_ward: string | null
+          urgency: string | null
+          voice_url: string | null
         }
         Insert: {
           address: string
+          admin_notes?: string | null
+          attachment_url?: string | null
+          category?: string | null
           created_at?: string
           details: string
           email?: string | null
           id?: string
+          is_emergency?: boolean | null
           is_private?: boolean | null
           mobile: string
           name?: string | null
           status?: string | null
           subject?: string | null
+          tracking_id?: string | null
+          union_ward?: string | null
+          urgency?: string | null
+          voice_url?: string | null
         }
         Update: {
           address?: string
+          admin_notes?: string | null
+          attachment_url?: string | null
+          category?: string | null
           created_at?: string
           details?: string
           email?: string | null
           id?: string
+          is_emergency?: boolean | null
           is_private?: boolean | null
           mobile?: string
           name?: string | null
           status?: string | null
           subject?: string | null
+          tracking_id?: string | null
+          union_ward?: string | null
+          urgency?: string | null
+          voice_url?: string | null
         }
         Relationships: []
       }
@@ -76,6 +139,42 @@ export type Database = {
           metadata?: Json | null
           section_key?: string
           title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      success_stories: {
+        Row: {
+          after_image: string | null
+          before_image: string | null
+          category: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          is_published: boolean | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          after_image?: string | null
+          before_image?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_published?: boolean | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          after_image?: string | null
+          before_image?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_published?: boolean | null
+          title?: string
           updated_at?: string | null
         }
         Relationships: []
