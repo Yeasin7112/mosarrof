@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import mpPhoto from "@/assets/mp-photo.jpeg";
 
 const navItems = [
   { label: "হোম", path: "/" },
@@ -21,9 +22,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b border-primary/10 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
-            <span className="text-lg font-bold text-primary-foreground">এ</span>
-          </div>
+          <img src={mpPhoto} alt="এমপি" className="h-10 w-10 rounded-full object-cover border-2 border-primary" />
           <span className="hidden text-lg font-bold text-foreground sm:inline-block">
             আপনার এমপি'কে লিখুন
           </span>
