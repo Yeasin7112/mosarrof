@@ -18,7 +18,7 @@ const HeroSection = () => {
         <div className="mx-auto max-w-3xl text-center">
           <div className="animate-fade-up">
             <span className="inline-block rounded-full bg-primary-foreground/10 px-4 py-1.5 text-sm font-medium text-primary-foreground/90 backdrop-blur-sm border border-primary-foreground/20">
-              ত্রয়োদশ জাতীয় সংসদ · ১১৪ পটুয়াখালী-৪
+              ত্রয়োদশ জাতীয় সংসদ · পটুয়াখালী-৪ (রাঙ্গাবালী, কলাপাড়া)
             </span>
           </div>
 
