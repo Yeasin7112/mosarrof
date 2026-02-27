@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -20,20 +17,28 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { LogOut, MessageSquare, Settings, RefreshCw, Eye, ChevronLeft, ChevronRight } from "lucide-react";
+import { LogOut, MessageSquare, Settings, RefreshCw, Eye, ChevronLeft, ChevronRight, FileText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Tables } from "@/integrations/supabase/types";
+import ContentEditor from "@/components/admin/ContentEditor";
 
 type Complaint = Tables<"complaints">;
 type SiteContent = Tables<"site_content">;
 
 const ITEMS_PER_PAGE = 10;
 
+const SECTION_LABELS: Record<string, string> = {
+  hero: "🏠 হোম পেজ হিরো",
+  mp_profile: "👤 এমপি পরিচিতি",
+  promises: "📋 অঙ্গীকারসমূহ",
+  contact: "📞 যোগাযোগ",
+  footer: "🔗 ফুটার ও সোশ্যাল মিডিয়া",
+};
+
 const AdminDashboard = () => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const queryClient = useQueryClient();
 
   const [activeTab, setActiveTab] = useState<"complaints" | "content">("complaints");
   const [complaints, setComplaints] = useState<Complaint[]>([]);
@@ -90,25 +95,6 @@ const AdminDashboard = () => {
     }
   };
 
-  const saveContent = async () => {
-    if (!editingContent) return;
-    const { error } = await supabase
-      .from("site_content")
-      .update({
-        title: editingContent.title,
-        content: editingContent.content,
-        metadata: editingContent.metadata,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", editingContent.id);
-    if (!error) {
-      toast({ title: "কন্টেন্ট আপডেট হয়েছে" });
-      queryClient.invalidateQueries({ queryKey: ["site_content"] });
-      fetchContents();
-      setEditingContent(null);
-    }
-  };
-
   const statusBadge = (status: string | null) => {
     const styles: Record<string, string> = {
       pending: "bg-secondary text-secondary-foreground",
@@ -129,6 +115,32 @@ const AdminDashboard = () => {
   };
 
   const totalPages = Math.ceil(totalComplaints / ITEMS_PER_PAGE);
+
+  // If editing content, show the dedicated editor
+  if (editingContent) {
+    return (
+      <div className="min-h-screen bg-muted/30">
+        <header className="border-b bg-card">
+          <div className="container flex h-14 items-center justify-between">
+            <h1 className="text-lg font-bold text-foreground">অ্যাডমিন ড্যাশবোর্ড</h1>
+            <div className="flex items-center gap-3">
+              <span className="hidden text-sm text-muted-foreground sm:inline">{user?.email}</span>
+              <Button variant="ghost" size="sm" onClick={() => navigate("/")}>সাইটে যান</Button>
+              <Button variant="outline" size="sm" onClick={signOut} className="gap-1">
+                <LogOut className="h-4 w-4" /> লগআউট
+              </Button>
+            </div>
+          </div>
+        </header>
+        <div className="container py-6">
+          <ContentEditor
+            content={editingContent}
+            onBack={() => { setEditingContent(null); fetchContents(); }}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-muted/30">
@@ -233,18 +245,27 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {/* Content Tab */}
+        {/* Content Tab - Simple Cards */}
         {activeTab === "content" && (
           <div className="space-y-3">
             {contents.map((c) => (
-              <div key={c.id} className="rounded-xl border bg-card p-4">
+              <div
+                key={c.id}
+                className="rounded-xl border bg-card p-5 cursor-pointer transition-colors hover:border-primary/40"
+                onClick={() => setEditingContent({ ...c })}
+              >
                 <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-xs text-muted-foreground font-mono">{c.section_key}</span>
-                    <p className="font-medium text-foreground">{c.title}</p>
+                  <div className="flex items-center gap-3">
+                    <FileText className="h-5 w-5 text-primary" />
+                    <div>
+                      <p className="font-semibold text-foreground">
+                        {SECTION_LABELS[c.section_key] || c.section_key}
+                      </p>
+                      <p className="text-sm text-muted-foreground">{c.title || "শিরোনাম নেই"}</p>
+                    </div>
                   </div>
-                  <Button variant="outline" size="sm" onClick={() => setEditingContent({ ...c })}>
-                    সম্পাদনা
+                  <Button variant="outline" size="sm">
+                    সম্পাদনা করুন
                   </Button>
                 </div>
               </div>
@@ -291,51 +312,6 @@ const AdminDashboard = () => {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Content Edit Dialog */}
-      <Dialog open={!!editingContent} onOpenChange={() => setEditingContent(null)}>
-        <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>কন্টেন্ট সম্পাদনা — {editingContent?.section_key}</DialogTitle>
-          </DialogHeader>
-          {editingContent && (
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label>শিরোনাম</Label>
-                <Input
-                  value={editingContent.title || ""}
-                  onChange={(e) => setEditingContent({ ...editingContent, title: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>বিবরণ</Label>
-                <Textarea
-                  rows={3}
-                  value={editingContent.content || ""}
-                  onChange={(e) => setEditingContent({ ...editingContent, content: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>মেটাডেটা (JSON)</Label>
-                <Textarea
-                  rows={8}
-                  className="font-mono text-xs"
-                  value={JSON.stringify(editingContent.metadata || {}, null, 2)}
-                  onChange={(e) => {
-                    try {
-                      const parsed = JSON.parse(e.target.value);
-                      setEditingContent({ ...editingContent, metadata: parsed });
-                    } catch {
-                      // allow invalid JSON while typing
-                    }
-                  }}
-                />
-              </div>
-              <Button onClick={saveContent} className="w-full">সংরক্ষণ করুন</Button>
             </div>
           )}
         </DialogContent>
