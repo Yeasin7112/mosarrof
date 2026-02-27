@@ -12,6 +12,10 @@ import PromisesPage from "./pages/PromisesPage";
 import ContactPage from "./pages/ContactPage";
 import LoginPage from "./pages/LoginPage";
 import AdminDashboard from "./pages/AdminDashboard";
+import TrackingPage from "./pages/TrackingPage";
+import TransparencyPage from "./pages/TransparencyPage";
+import AppointmentPage from "./pages/AppointmentPage";
+import SuccessStoriesPage from "./pages/SuccessStoriesPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +33,10 @@ const App = () => (
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/promises" element={<PromisesPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/tracking" element={<TrackingPage />} />
+            <Route path="/transparency" element={<TransparencyPage />} />
+            <Route path="/appointment" element={<AppointmentPage />} />
+            <Route path="/success-stories" element={<SuccessStoriesPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
             <Route path="*" element={<NotFound />} />
