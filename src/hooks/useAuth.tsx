@@ -26,34 +26,44 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const checkAdmin = async (userId: string) => {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("user_roles")
       .select("role")
       .eq("user_id", userId)
       .eq("role", "admin")
       .maybeSingle();
+
+    if (error) {
+      setIsAdmin(false);
+      return;
+    }
+
     setIsAdmin(!!data);
   };
 
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      const currentUser = session?.user ?? null;
-      setUser(currentUser);
-      if (currentUser) {
-        await checkAdmin(currentUser.id);
-      } else {
-        setIsAdmin(false);
-      }
+  const syncAuthState = (currentUser: User | null) => {
+    setUser(currentUser);
+
+    if (!currentUser) {
+      setIsAdmin(false);
+      setLoading(false);
+      return;
+    }
+
+    void checkAdmin(currentUser.id).finally(() => {
       setLoading(false);
     });
+  };
 
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      const currentUser = session?.user ?? null;
-      setUser(currentUser);
-      if (currentUser) {
-        await checkAdmin(currentUser.id);
-      }
-      setLoading(false);
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      syncAuthState(session?.user ?? null);
+    });
+
+    void supabase.auth.getSession().then(({ data: { session } }) => {
+      syncAuthState(session?.user ?? null);
     });
 
     return () => subscription.unsubscribe();
