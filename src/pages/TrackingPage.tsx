@@ -28,7 +28,7 @@ const TrackingPage = () => {
     const { data, error } = await supabase
       .from("complaints")
       .select("tracking_id, category, urgency, status, created_at, subject, is_private, union_ward, admin_notes")
-      .eq("tracking_id", trackingId.trim().toUpperCase())
+      .ilike("tracking_id", trackingId.trim())
       .maybeSingle();
 
     setLoading(false);
