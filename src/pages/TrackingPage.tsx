@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, CheckCircle2, Clock, Eye, Forward, Loader2 } from "lucide-react";
+import { CATEGORY_LABELS } from "@/lib/constants";
 
 const STATUS_STEPS = [
   { key: "pending", label: "🟡 জমা হয়েছে", icon: Clock, desc: "আপনার অভিযোগ সফলভাবে জমা পড়েছে" },
