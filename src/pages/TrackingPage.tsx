@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, CheckCircle2, Clock, Eye, Forward, Loader2 } from "lucide-react";
+import { CATEGORY_LABELS } from "@/lib/constants";
 
 const STATUS_STEPS = [
   { key: "pending", label: "🟡 জমা হয়েছে", icon: Clock, desc: "আপনার অভিযোগ সফলভাবে জমা পড়েছে" },
@@ -92,7 +93,7 @@ const TrackingPage = () => {
                     </div>
                     <div>
                       <p className="text-muted-foreground">ক্যাটাগরি</p>
-                      <p className="font-medium">{complaint.category || "—"}</p>
+                      <p className="font-medium">{CATEGORY_LABELS[complaint.category] || complaint.category || "—"}</p>
                     </div>
                     <div>
                       <p className="text-muted-foreground">এলাকা</p>

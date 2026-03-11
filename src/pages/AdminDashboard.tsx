@@ -32,6 +32,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell,
 } from "recharts";
+import { CATEGORY_LABELS } from "@/lib/constants";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -41,12 +42,6 @@ const SECTION_LABELS: Record<string, string> = {
   promises: "📋 অঙ্গীকারসমূহ",
   contact: "📞 যোগাযোগ",
   footer: "🔗 ফুটার ও সোশ্যাল মিডিয়া",
-};
-
-const CATEGORY_LABELS: Record<string, string> = {
-  road: "রাস্তা", electricity: "বিদ্যুৎ", education: "শিক্ষা",
-  health: "স্বাস্থ্য", water: "পানি", land: "ভূমি",
-  corruption: "দুর্নীতি", other: "অন্যান্য",
 };
 
 const COLORS = ["hsl(45, 80%, 55%)", "hsl(160, 100%, 20%)", "hsl(200, 80%, 50%)", "hsl(0, 84%, 60%)", "hsl(280, 60%, 50%)"];
