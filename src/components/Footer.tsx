@@ -72,14 +72,15 @@ const Footer = () => {
 
         <div className="mt-8 border-t border-primary-foreground/20 pt-6 text-center text-sm text-primary-foreground/60">
           <p>© ২০২৬ আপনার এমপি'কে লিখুন। সর্বস্বত্ব সংরক্ষিত।</p>
-          <p className="mt-2">
-            কারিগরি সহায়তায়{" "}
+          <p className="mt-3 flex items-center justify-center gap-2 text-primary-foreground/80">
+            <span>কারিগরি সহায়তায় :</span>
             <a
               href={meta.developer_facebook || "https://www.facebook.com/helloYeasin007"}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary-foreground/80 underline hover:text-primary-foreground transition-colors"
+              className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/40 px-4 py-1.5 text-sm text-primary-foreground transition-colors hover:bg-primary-foreground/10"
             >
+              <Facebook size={14} />
               {meta.developer_name || "ইয়াছিন আরাফাত শাওন"}
             </a>
           </p>
