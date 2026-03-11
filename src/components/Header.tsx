@@ -34,10 +34,10 @@ const Header = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${
+              className={`rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-primary hover:text-primary-foreground ${
                 location.pathname === item.path
-                  ? "bg-accent text-accent-foreground"
-                  : "text-muted-foreground"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-primary-foreground"
               }`}
             >
               {item.label}
