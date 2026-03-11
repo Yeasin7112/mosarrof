@@ -71,10 +71,10 @@ const Header = () => {
                 key={item.path}
                 to={item.path}
                 onClick={() => setIsOpen(false)}
-                className={`rounded-md px-4 py-3 text-sm font-medium transition-colors hover:bg-accent ${
+                className={`rounded-md px-4 py-3 text-sm font-medium transition-colors hover:bg-primary hover:text-primary-foreground ${
                   location.pathname === item.path
-                    ? "bg-accent text-accent-foreground"
-                    : "text-muted-foreground"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-primary-foreground"
                 }`}
               >
                 {item.label}
