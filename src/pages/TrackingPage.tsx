@@ -93,7 +93,7 @@ const TrackingPage = () => {
                     </div>
                     <div>
                       <p className="text-muted-foreground">ক্যাটাগরি</p>
-                      <p className="font-medium">{complaint.category || "—"}</p>
+                      <p className="font-medium">{CATEGORY_LABELS[complaint.category] || complaint.category || "—"}</p>
                     </div>
                     <div>
                       <p className="text-muted-foreground">এলাকা</p>
