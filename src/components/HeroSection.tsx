@@ -38,7 +38,7 @@ const HeroSection = () => {
               </Button>
             </Link>
             <Link to="/profile">
-              <Button size="lg" variant="outline" className="gap-2 text-base border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+              <Button size="lg" variant="secondary" className="gap-2 text-base bg-secondary text-secondary-foreground hover:bg-secondary/80">
                 <UserCircle className="h-5 w-5" />
                 প্রার্থী পরিচিতি
               </Button>
